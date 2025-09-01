@@ -1,0 +1,56 @@
+// Assignment8_HospitalSystem.java
+
+class Patient {
+    String patientId, name;
+    String[] treatments = new String[5];
+    int count = 0;
+
+    Patient(String id, String n){ patientId=id; name=n; }
+    void addTreatment(String t){ if(count<5) treatments[count++]=t; }
+}
+
+class Doctor {
+    String doctorId, name, specialization;
+    double fee;
+
+    Doctor(String id,String n,String s,double f){
+        doctorId=id; name=n; specialization=s; fee=f;
+    }
+}
+
+class Appointment {
+    String appId;
+    Patient p; Doctor d; String date; double bill;
+    static int totalAppointments=0; static double totalRevenue=0;
+
+    Appointment(String id,Patient p,Doctor d,String dt){
+        appId=id; this.p=p; this.d=d; date=dt;
+        bill=d.fee;
+        totalAppointments++; totalRevenue+=bill;
+    }
+    void show(){
+        System.out.println("Appt:"+appId+" Patient:"+p.name+
+                           " Doctor:"+d.name+" Fee:"+bill);
+    }
+}
+
+public class HospitalSystem {
+    public static void main(String[] args) {
+        Patient p1=new Patient("P1","Alice");
+        Patient p2=new Patient("P2","Bob");
+        Doctor d1=new Doctor("D1","Dr. Smith","Cardiology",500);
+        Doctor d2=new Doctor("D2","Dr. Rose","Dermatology",300);
+
+        Appointment a1=new Appointment("A1",p1,d1,"1-Sep");
+        Appointment a2=new Appointment("A2",p2,d2,"2-Sep");
+
+        p1.addTreatment("Heart Checkup");
+        p2.addTreatment("Skin Allergy");
+
+        a1.show();
+        a2.show();
+
+        System.out.println("Total Appointments: "+Appointment.totalAppointments);
+        System.out.println("Hospital Revenue: "+Appointment.totalRevenue);
+    }
+}
