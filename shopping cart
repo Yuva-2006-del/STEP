@@ -1,0 +1,49 @@
+class Product {
+    String id, name, category;
+    double price; int stock;
+    static int totalProducts=0;
+    Product(String id,String n,double p,String c,int s){
+        this.id=id; name=n; price=p; category=c; stock=s; totalProducts++;
+    }
+}
+
+class ShoppingCart {
+    String cartId, customer;
+    Product[] items=new Product[20]; int[] qty=new int[20]; int count=0;
+    double cartTotal=0;
+
+    ShoppingCart(String id,String c){ cartId=id; customer=c; }
+
+    void addProduct(Product p,int q){
+        if(p.stock>=q){ items[count]=p; qty[count]=q; p.stock-=q; count++; }
+    }
+    void removeProduct(String pid){
+        for(int i=0;i<count;i++) if(items[i].id.equals(pid)){ items[i].stock+=qty[i]; qty[i]=0; }
+    }
+    void calculateTotal(){
+        cartTotal=0;
+        for(int i=0;i<count;i++) cartTotal+=items[i].price*qty[i];
+    }
+    void displayCart(){
+        calculateTotal();
+        System.out.println(customer+"'s Cart:");
+        for(int i=0;i<count;i++) if(qty[i]>0)
+            System.out.println(items[i].name+" x"+qty[i]);
+        System.out.println("Total: "+cartTotal+"\n");
+    }
+    void checkout(){ System.out.println(customer+" paid "+cartTotal); }
+}
+
+public class Assignment2_ShoppingCart {
+    public static void main(String[] a){
+        Product p1=new Product("P1","Laptop",50000,"Electronics",5);
+        Product p2=new Product("P2","Phone",20000,"Electronics",10);
+        Product p3=new Product("P3","Shirt",1000,"Clothes",20);
+
+        ShoppingCart c1=new ShoppingCart("C1","Alice");
+        c1.addProduct(p1,1); c1.addProduct(p2,2); c1.displayCart(); c1.checkout();
+
+        ShoppingCart c2=new ShoppingCart("C2","Bob");
+        c2.addProduct(p3,3); c2.removeProduct("P3"); c2.displayCart();
+    }
+}
