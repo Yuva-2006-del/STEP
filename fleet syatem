@@ -1,0 +1,54 @@
+// Assignment7_FleetSystem.java
+
+class Vehicle {
+    String vehicleId, brand, model;
+    double mileage;
+    boolean inService = true;
+
+    static int totalVehicles = 0;
+    static String companyName = "City Transport";
+
+    Vehicle(String id, String b, String m, double mil) {
+        vehicleId = id; brand = b; model = m; mileage = mil;
+        totalVehicles++;
+    }
+
+    void updateMileage(double km) { mileage += km; }
+    void scheduleMaintenance() { inService = false; }
+    void completeMaintenance() { inService = true; }
+
+    void showInfo() {
+        System.out.println(vehicleId+" "+brand+" "+model+
+            " Mileage:"+mileage+" InService:"+inService);
+    }
+}
+
+class Driver {
+    String driverId, driverName;
+    Vehicle assigned;
+
+    Driver(String id,String name){ driverId=id; driverName=name; }
+    void assignVehicle(Vehicle v){ assigned=v; System.out.println(driverName+" drives "+v.model); }
+}
+
+public class FleetSystem {
+    public static void main(String[] args) {
+        Vehicle v1=new Vehicle("V1","Tata","Bus",10000);
+        Vehicle v2=new Vehicle("V2","Ashok","Truck",5000);
+
+        Driver d1=new Driver("D1","Alice");
+        Driver d2=new Driver("D2","Bob");
+
+        d1.assignVehicle(v1);
+        d2.assignVehicle(v2);
+
+        v1.updateMileage(300);
+        v1.scheduleMaintenance();
+
+        v1.showInfo();
+        v2.showInfo();
+
+        System.out.println("Total Vehicles: "+Vehicle.totalVehicles);
+        System.out.println("Company: "+Vehicle.companyName);
+    }
+}
