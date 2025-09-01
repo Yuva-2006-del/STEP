@@ -1,0 +1,62 @@
+// Assignment5_LibrarySystem.java
+
+class Book {
+    String bookId, title;
+    boolean isIssued = false;
+
+    Book(String id, String t) {
+        bookId = id;
+        title = t;
+    }
+}
+
+class Member {
+    String memberId, memberName;
+    Book issuedBook;
+    int daysLate;
+    double fine;
+
+    static double finePerDay = 5.0;
+
+    Member(String id, String name) {
+        memberId = id;
+        memberName = name;
+    }
+
+    void issueBook(Book b) {
+        if (!b.isIssued) {
+            issuedBook = b;
+            b.isIssued = true;
+            System.out.println(memberName + " issued " + b.title);
+        } else {
+            System.out.println(b.title + " is already issued.");
+        }
+    }
+
+    void returnBook(int daysLate) {
+        if (issuedBook != null) {
+            this.daysLate = daysLate;
+            fine = daysLate * finePerDay;
+            System.out.println(memberName + " returned " + issuedBook.title +
+                               " | Fine: " + fine);
+            issuedBook.isIssued = false;
+            issuedBook = null;
+        }
+    }
+}
+
+public class LibrarySystem {
+    public static void main(String[] args) {
+        Book b1 = new Book("B1", "Java Basics");
+        Book b2 = new Book("B2", "OOP Concepts");
+
+        Member m1 = new Member("M1", "Alice");
+        Member m2 = new Member("M2", "Bob");
+
+        m1.issueBook(b1);
+        m2.issueBook(b1); // already issued
+        m1.returnBook(3); // 3 days late
+        m2.issueBook(b1); // now available
+        m2.returnBook(0);
+    }
+}
