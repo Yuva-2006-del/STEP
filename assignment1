@@ -1,0 +1,38 @@
+class PersonalAccount {
+    private String accountHolderName;
+    private String accountNumber;
+    private double currentBalance;
+
+    // static variable
+    static String bankName = "MyBank";
+
+    PersonalAccount(String name, String accNum, double balance) {
+        this.accountHolderName = name;
+        this.accountNumber = accNum;
+        this.currentBalance = balance;
+    }
+
+    void addIncome(double amount) {
+        currentBalance += amount;
+    }
+
+    void addExpense(double amount) {
+        currentBalance -= amount;
+    }
+
+    void displayAccountSummary() {
+        System.out.println("Name: " + accountHolderName);
+        System.out.println("Acc No: " + accountNumber);
+        System.out.println("Balance: " + currentBalance);
+        System.out.println("Bank: " + bankName);
+    }
+}
+
+public class Assignment1 {
+    public static void main(String[] args) {
+        PersonalAccount a1 = new PersonalAccount("Alice", "A101", 1000);
+        a1.addIncome(500);
+        a1.addExpense(200);
+        a1.displayAccountSummary();
+    }
+}
