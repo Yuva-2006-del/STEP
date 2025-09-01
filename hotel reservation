@@ -1,0 +1,76 @@
+// Assignment3_HotelReservation.java
+
+class Room {
+    String roomNumber;
+    String roomType;
+    double pricePerNight;
+    boolean isAvailable;
+
+    Room(String num, String type, double price) {
+        roomNumber = num;
+        roomType = type;
+        pricePerNight = price;
+        isAvailable = true;
+    }
+}
+
+class Guest {
+    String guestId;
+    String guestName;
+
+    Guest(String id, String name) {
+        guestId = id;
+        guestName = name;
+    }
+}
+
+class Booking {
+    String bookingId;
+    Guest guest;
+    Room room;
+    double totalAmount;
+
+    static int totalBookings = 0;
+    static double hotelRevenue = 0;
+
+    Booking(String id, Guest g, Room r, int nights) {
+        bookingId = id;
+        guest = g;
+        room = r;
+        totalAmount = r.pricePerNight * nights;
+
+        if (r.isAvailable) {
+            r.isAvailable = false;
+            totalBookings++;
+            hotelRevenue += totalAmount;
+        } else {
+            System.out.println("Room not available!");
+        }
+    }
+
+    void showBooking() {
+        System.out.println("Booking: " + bookingId + 
+            " Guest: " + guest.guestName + 
+            " Room: " + room.roomNumber + 
+            " Bill: " + totalAmount);
+    }
+}
+
+public class HotelReservation {
+    public static void main(String[] args) {
+        Room r1 = new Room("101", "Deluxe", 2000);
+        Room r2 = new Room("102", "Suite", 3000);
+
+        Guest g1 = new Guest("G1", "Alice");
+        Guest g2 = new Guest("G2", "Bob");
+
+        Booking b1 = new Booking("B1", g1, r1, 2);
+        Booking b2 = new Booking("B2", g2, r2, 3);
+
+        b1.showBooking();
+        b2.showBooking();
+
+        System.out.println("Total Bookings: " + Booking.totalBookings);
+        System.out.println("Hotel Revenue: " + Booking.hotelRevenue);
+    }
+}
